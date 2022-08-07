@@ -25,6 +25,7 @@
   "devDependencies": {
     "@nuxt/types": "^2.15.8",
     "@nuxt/typescript-build": "^2.1.0",
+    "@types/jsdom": "^20.0.0",
     "eslint-config-prettier": "^8.3.0",
     "prettier": "^2.5.1"
   },

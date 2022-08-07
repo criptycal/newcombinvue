@@ -7,11 +7,6 @@ import { validationResult } from 'express-validator';
 */
 export const postPayables = async (req: any, res: any, next: any) => {
     try {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            //console.log(errors);
-            return res.status(422).json({ errors: errors.array() });
-        }
         const {tipoServicio, description, fechavencimiento, importeServicio, paymentStatus, barcode} = req.body;
         const payable = new Payables({tipoServicio, description, fechavencimiento, importeServicio, paymentStatus, barcode});
         const savedPayable = await payable.save();
@@ -77,13 +72,34 @@ export const deletePayable = async (req: any, res: any, next: any) => {
 
 export const getPayableByTipoServicio = async (req: any, res: any, next: any) => {
     try {
-        const payable = await Payables.find({tipoServicio: req.body.tipoServicio});
-        console.log(req.body.tipoServicio);
+        const {typeservice} = req.params;
+        const payable = await Payables.find({tipoServicio: typeservice});
         res.json(payable);
     } catch (error) {
         console.log(error);
     }
 }
+
+export const getPayableByBarcode = async (req: any, res: any, next: any) => {
+    try {
+        const {barcode} = req.params;
+        const payable = await Payables.find({barcode: barcode});
+        res.json(payable);
+    } catch (error) {
+        console.log(error);
+    }
+} 
+
+export const getPayableByPaymentStatus = async (req: any, res: any, next: any) => {
+    try {
+        const {paymentstatus} = req.params;
+        const payable = await Payables.find({paymentStatus: paymentstatus});
+        res.json(payable);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 
 
 
